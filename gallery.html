@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Image Gallery</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Roboto:400,700" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" href="css/style.css">
+
+  <style>
+    html,
+    body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      display: table;
+      color: #f9f9f9;
+      font-weight: 100;
+      font-family: 'Roboto', sans-serif;
+      /* background-color: rgb(75, 95, 120); */
+      background-color: #333;
+    }
+
+    a {
+      color: #ac4;
+    }
+
+    .red {
+      background: #e47c4c;
+    }
+
+    .red {
+      background: #e1e44c;
+    }
+
+    .red {
+      background: #51e44c;
+    }
+
+    a:hover {
+      color: #d8ff64;
+    }
+
+
+    .container {
+      padding: 1rem 2rem;
+      /* text-align: center; */
+      text-align: left;
+    }
+
+    .container-max-width {
+      max-width: 1440px;
+      margin: 0 auto;
+    }
+
+
+    .title {
+      font-size: 96px;
+    }
+
+    .opt {
+      margin-top: 30px;
+    }
+
+    .opt a {
+      text-decoration: none;
+      font-size: 150%;
+    }
+
+    input[type="text"],
+    input[type="submit"],
+    input[type="button"] {
+      height: 50px;
+      font-family: 'Roboto', Arial, Helvetica, sans-serif;
+      font-size: 16px;
+      font-weight: 500;
+      padding-left: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    input[type="submit"],
+    input[type="button"] {
+      cursor: pointer;
+      text-transform: uppercase;
+      font-size: 14px;
+      padding-right: 10px;
+    }
+
+    input[type="submit"]:hover,
+    input[type="button"]:hover,
+    input[type="submit"]:focus,
+    input[type="button"]:focus,
+    input[type="submit"]:active,
+    input[type="button"]:active {
+      background-color: #ECCF6B;
+    }
+
+
+    .table {
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
+      font-size: 20px;
+      border-collapse: collapse;
+      border-spacing: 0;
+      width: 100%;
+    }
+
+    .table tr:nth-child(odd) {
+      padding: 10px;
+      background-color: #eee;
+    }
+
+    .table td {
+      padding: 10px;
+      color: red;
+    }
+
+    tr.tr>th {
+      background: gray;
+      color: white;
+      padding: 10px;
+    }
+
+    .no-bullets {
+      list-style-type: none;
+      list-style-image: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    ul.no-bullets li {
+      margin-bottom: 15px;
+    }
+
+    ul.no-bullets>li:last-child {
+      margin-bottom: 0px;
+    }
+
+    .icon-24 {
+      position: relative;
+      stroke: #eee;
+      top: 5px;
+      margin-right: 2px;
+      width: 24px;
+      height: 24px;
+    }
+
+
+    .icon {
+      position: relative;
+      top: 10px;
+      width: 36px;
+      height: 36px;
+    }
+
+    .error-box {
+      color: #ff7765;
+      padding-top: 20px;
+    }
+
+
+
+    /* .gallery {
+      -moz-column-count: 3;
+      -webkit-count: 3;
+      column-count: 3;
+      overflow: hidden;
+      column-gap: 10px;
+      margin-top: 10px;
+    } */
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      grid-auto-rows: 400px;
+      grid-auto-flow: dense;
+      grid-gap: 1em;
+      text-align: center;
+    }
+
+    @media screen and (max-width: 1280px) {
+      .gallery {
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-rows: 400px;
+
+      }
+    }
+
+    @media screen and (max-width: 768px) {
+      .gallery {
+        grid-template-columns: repeat(4, 1fr);
+        grid-auto-rows: 400px;
+
+      }
+    }
+
+    @media screen and (max-width: 576px) {
+      .gallery {
+        grid-template-columns: repeat(1, 1fr);
+        grid-auto-rows: 400px;
+      }
+
+
+      .w-1,
+      .w-2,
+      .w-3,
+      .w-4,
+      .w-5,
+      .w-6 {
+        grid-column: span 1 !important;
+      }
+
+      .h-1,
+      .h-2,
+      .h-3,
+      .h-4,
+      .h-5,
+      .h-6 {
+        grid-row: span 1 !important;
+      }
+    }
+
+    .gallery-item {
+      width: 100%;
+      height: 100%;
+      position: relative;
+    }
+
+    .gallery-item .image {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+    }
+
+    .gallery-item .image img {
+      width: 100%;
+      height: 100%;
+      -o-object-fit: cover;
+      object-fit: cover;
+      -o-object-position: 50% 50%;
+      object-position: 50% 50%;
+      opacity: 0.8;
+      cursor: pointer;
+      -o-transition: 0.5s ease-in-out;
+      transition: 0.5s ease-in-out;
+    }
+
+    .gallery .image img:hover {
+      opacity: 1;
+      cursor: pointer;
+      transform: scale(1.2);
+    }
+
+    .gallery .image img:active,
+    .gallery .image img:focus {
+      transition: 750ms;
+      opacity: 1;
+      cursor: pointer;
+      border: 2px solid #fefefe;
+    }
+
+    .gallery-item .text {
+      opacity: 0;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 20px;
+      pointer-events: none;
+      background-color: rgba(0, 0, 0, 0.2);
+      z-index: 4;
+      transition: 0.3s ease-in-out;
+      -webkit-backdrop-filter: blur(2px) saturate(1.2);
+      backdrop-filter: blur(2px) saturate(1.2);
+    }
+
+    .gallery-item:hover .text {
+      opacity: 1;
+      animation: move-down .4s linear;
+      padding: 1em;
+      width: 100%;
+      /* outline: 2px solid red; */
+    }
+
+    @keyframes move-down {
+
+      0% {
+        top: 10%;
+      }
+
+      50% {
+        top: 35%;
+      }
+
+      100% {
+        top: 50%;
+      }
+    }
+
+    /* Touch screens don't have hover */
+    @media (hover: none) {
+      .gallery-item .text {
+        opacity: 1;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 90%;
+        font-size: 20px;
+        pointer-events: none;
+        background-color: rgba(0, 0, 0, 0.2);
+        z-index: 4;
+        transition: 0.3s ease-in-out;
+        -webkit-backdrop-filter: blur(2px) saturate(1.2);
+        backdrop-filter: blur(2px) saturate(1.2);
+      }
+    }
+
+    .w-1 {
+      grid-column: span 1;
+    }
+
+    .w-2 {
+      grid-column: span 2;
+    }
+
+    .w-3 {
+      grid-column: span 3;
+    }
+
+    .w-4 {
+      grid-column: span 4;
+    }
+
+    .w-5 {
+      grid-column: span 5;
+    }
+
+    .w-6 {
+      grid-column: span 6;
+    }
+
+    .h-1 {
+      grid-row: span 1;
+    }
+
+    .h-2 {
+      grid-row: span 2;
+    }
+
+    .h-3 {
+      grid-row: span 3;
+    }
+
+    .h-4 {
+      grid-row: span 4;
+    }
+
+    .h-5 {
+      grid-row: span 5;
+    }
+
+    .h-6 {
+      grid-row: span 6;
+    }
+
+
+    .modal-body {
+      padding: 0;
+    }
+
+    .modal-img {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      /* height: 100%; DO NOT EVER USE 100%, CHROME HEIGHT=0 ERROR!!!!!!!! */
+      height: auto;
+      display: table;
+    }
+
+    .modal-dialog {
+      position: relative;
+      pointer-events: fill;
+      /* height: 100%;
+      position: relative;
+      margin: auto;
+      display: flex;
+      align-items: center;
+      justify-content: center; */
+    }
+
+    .modal-content {
+      border: none;
+    }
+    .modal {
+      padding-right: 0 !important;
+    }
+    .modal-backdrop {
+      width: 100%;
+      height: 100%;
+    }
+
+  </style>
+</head>
+
+<body>
+  <div class="container-max-width">
+    <div class="container">
+      <div>
+        <form id="imageForm" enctype="multipart/form-data" method="post"
+          style="background: #555; margin-bottom: 80px; padding-left: 10px;">
+          <h1 style="margin-top: 40px; padding-top: 10px; padding-bottom: 10px;">Képfeltöltés</h1>
+          <div class="form-group">
+            <label for="image">Kép feltöltése</label><br />
+            <input type="file" id="image" name="image" />
+            <div style="color:#ff7765;">
+              <ul id="form-error-image" class="no-bullets">
+              </ul>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="title">Kép címe</label><br />
+            <input style="width: 298px" type="text" id="title" name="title" placeholder="pl. A rőzsehordó asszony" />
+            <div style="color:#ff7765;">
+              <ul id="form-error-title" class="no-bullets">
+              </ul>
+            </div>
+          </div>
+
+          <input id="upload-img" type="submit" name="submit" value="Feltölt" />
+          <div id="form-error" style="color:#ff7765;"></div>
+          <div id="#success" style="color:#51e44c;"></div>
+        </form>
+      </div>
+
+
+      <h2>A képgalériám</h2>
+      <div style="color:#ff7765;">
+        <ul id="form-error-json" class="no-bullets">
+        </ul>
+      </div>
+      <div id="myGallery">
+
+      </div>
+
+
+      <!-- <h2>A képgalériám</h2>
+      <div class="gallery">
+
+        <div class="gallery-item w-2 h-1">
+          <div class="image">
+            <img id="first-img" src="images/gallery/andi-jani.jpg" alt="andi-jani" class="single-image">
+          </div>
+          <div class="text">andi-jani</div>
+        </div>
+
+        <div class="gallery-item w-4 h-2">
+          <div class="image">
+            <img src="images/gallery/vasarhely-bachata-2020-03-12.jpg" alt="vasarhely-bachata-2020-03-12" class="single-image">
+          </div>
+          <div class="text">vasarhely-bachata-2020-03-12</div>
+        </div>
+
+        <div class="gallery-item w-2 h-1">
+          <div class="image">
+            <img src="images/gallery/meditalo-ferfi.jpg" alt="meditalo-ferfi" class="single-image">
+          </div>
+          <div class="text">meditalo-ferfi</div>
+        </div>
+
+        <div class="gallery-item w-2 h-1">
+          <div class="image">
+            <img src="images/gallery/dominikai-bachata.jpg" alt="dominikai-bachata" class="single-image">
+          </div>
+          <div class="text">dominikai-bachata</div>
+        </div>
+
+        <div class="gallery-item w-4 h-2">
+          <div class="image">
+            <img src="images/gallery/hmvh-bachata-workshop-2020-06-28.jpg" alt="hmvh-bachata-workshop-2020-06-28" class="single-image">
+          </div>
+          <div class="text">hmvh-bachata-workshop-2020-06-28</div>
+        </div>
+
+        <div class="gallery-item w-2">
+          <div class="image">
+            <img src="images/gallery/andi-jani-2.jpg" alt="andi-jani-2" class="single-image">
+          </div>
+          <div class="text">andi-jani-2</div>
+        </div>
+
+        <div class="gallery-item w-3 h-1">
+          <div class="image">
+            <img src="images/gallery/csopifoto.jpg" alt="csopifoto" class="single-image">
+          </div>
+          <div class="text">csopifoto</div>
+        </div>
+
+        <div class="gallery-item w-3">
+          <div class="image">
+            <img src="images/gallery/csoportos-meditacio-hold.jpg" alt="csoportos-meditacio-hold" class="single-image">
+          </div>
+          <div class="text">csoportos-meditacio-hold</div>
+        </div>
+
+        <div class="gallery-item w-6">
+          <div class="image">
+            <img id="last-img" src="images/gallery/szeged-sensual-bachata-ingyenes-ora-2020-06-24.jpg" alt="szeged-sensual-bachata-ingyenes-ora-2020-06-24" class="single-image">
+          </div>
+          <div class="text">szeged-sensual-bachata-ingyenes-ora-2020-06-24</div>
+        </div>
+
+      </div>
+    </div> -->
+
+
+      <div id="lightbox-modal" class="modal fade" tabindex="-1" role="dialog"
+        aria-labelledby="image preview large lightbox" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+          <div class="modal-content" >
+            <div class="modal-body">
+
+            </div>
+          </div>
+        </div>
+
+        <div style="z-index: 100000; position: absolute; top: 0; right: 0;">
+          <button id="close-lighbox" type="button" class="btn btn-secondary">&times;</button>
+        </div>
+        <div style="z-index: 100000; position: absolute; top: 50%; right: 0;">
+          <button id="next" type="button" class="btn btn-secondary">&rarr;</button>
+        </div>
+        <div style="z-index: 100000; position: absolute; top: 50%; left: 0;">
+          <button id="prev" type="button" class="btn btn-secondary">
+            &larr;
+          </button>
+        </div>
+      </div>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"
+      integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+      integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+      crossorigin="anonymous"></script>
+    <script>
+      $(document).ready(function () {
+
+        // ajax get request for the image gallery
+        function getMyGallery() {
+          // AJAX GET
+          $.ajax({
+            type: 'GET',
+            url: 'read-gallery.php',
+            data: '',
+            dataType: 'json',
+            statusCode: {
+              404: function () {
+                $('#form-error').html('404 Error.');
+              }
+            },
+            success: function (data) {
+              $('#myGallery').html('');
+              $('#myGallery').html(data.myGallery);
+              var errors = data.errorStackJson;
+              if (errors) {
+                $('#form-error-json').html('');
+                printErrorArr(errors, '#form-error-json');
+              }
+              var galleryItemCount = data.galleryItemCount;
+              modalControl(galleryItemCount);
+            }
+          });
+        }
+        getMyGallery();
+
+
+
+        // print error messages as list elem
+        function printErrorArr(arr, selector) {
+          for (var i = 0; i < arr.length; i++) {
+            $(selector).append('<li>' + arr[i] + '</li>');
+          }
+        }
+
+        // ajax post request image upload
+        $('#upload-img').on('click', function (e) {
+          e.preventDefault();
+
+          var image = $('#image').val();
+          var title = $('#title').val();
+
+          var form = $('#imageForm')[0];
+          var data = new FormData(form);
+
+          // AJAX POST
+          $.ajax({
+            type: 'POST',
+            url: 'create.php',
+            enctype: 'multipart/form-data',
+            processData: false,  // Important!
+            contentType: false,
+            cache: false,
+            data: data,
+            dataType: 'json',
+            statusCode: {
+              404: function () {
+                $('#form-error').html('<p>404 Error.</p>');
+              }
+            },
+            success: function (data) {
+              $('#res').html(data.html);
+
+              // print success message
+              var successMessage = data.successMessage;
+              if (successMessage) {
+                $('#success').html('<span>' + successMessage + '</span>');
+              }
+
+              // print error messages
+              var imageErrors = data.errorStackImage;
+              var titleErrors = data.errorStackTitle;
+              var jsonErrors = data.errorStackJson;
+
+              if (imageErrors) {
+                $('#form-error-image').html('');
+                printErrorArr(imageErrors, '#form-error-image');
+              }
+              if (titleErrors) {
+                $('#form-error-title').html('');
+                printErrorArr(titleErrors, '#form-error-title');
+              }
+              if (jsonErrors) {
+                $('#form-error-json').html('');
+                printErrorArr(jsonErrors, '#form-error-json');
+              }
+
+              // Refresh gallery after image uploads
+              getMyGallery();
+              // modalControl();
+            }
+          });
+        });
+
+
+        // to control modal controls
+        function modalControl(galleryItemCount) {
+          // to store current next image src attribute, to have a reference to a variable
+          var nextItem = null;
+
+          var prevItem = null;
+          // to store the first image
+          var firstItem = $('#first-img');
+          // to store the last image
+          var lastItem = $('#last-img');
+
+
+          $('.single-image').on('click', function () {
+            var link = $(this).attr('src');
+            var position = $(this).attr('id');
+
+            // get position
+            if (position === 'first-img') {
+              position = 1;
+            } else if (position === 'last-img') {
+              position = galleryItemCount;
+            } else {
+              position++;
+            }
+
+            var currentItem = $(this);
+
+            var nextItem = null;
+            var prevItem = null;
+
+            // get next nested img sibling of current image clicked
+            // to create a next image link for the modal
+            nextItem = $('.gallery-item').find(currentItem).parent().parent().next().find('img');
+            if (nextItem.attr('src') === undefined) {
+              nextItem = firstItem;
+            }
+            var nextPosition = nextItem.attr('id');
+
+            if (nextPosition === 'first-img') {
+              nextPosition = 1;
+            } else if (nextPosition === 'last-img') {
+              nextPosition = galleryItemCount;
+            } else {
+              nextPosition++;
+            }
+
+            console.log('Next: ' + nextItem.attr('src'));
+
+            // get previous nested img sibling of current image clicked
+            // to create a previous image link for the modal
+            var prevItem = $('.gallery-item').find(currentItem).parent().parent().prev().find('img');
+            if (prevItem.attr('src') === undefined) {
+              prevItem = lastItem;
+            }
+
+            var prevPosition = nextItem.attr('id');
+
+            if (prevPosition === 'first-img') {
+              prevPosition = 1;
+            } else if (prevPosition === 'last-img') {
+              prevPosition = galleryItemCount;
+            } else {
+              prevPosition++;
+            }
+
+            console.log('Prev: ' + prevItem.attr('src'));
+
+            // get image subtitle
+
+            console.log(currentItem);
+
+            // put image link into src
+            $('.modal-body').html('<img src="' + link + '" class="modal-img" alt="" /><div style="color: #333; padding-left: 10px;">' + position + '/' + galleryItemCount + '. kép: ' + currentItem.attr('alt') + '</div>');
+            // open modal
+            $('#lightbox-modal').modal();
+
+
+            function nextButton() {
+              $('#next').on('click', function () {
+                // if we are at the last image in the gallery, the next item will be the very first item
+                // if (nextItem.attr('src') === undefined) {
+                //   $('.modal-body').html('<img src="' + firstItem.attr('src') + '" class="modal-img" alt="" />');
+                //   prevItem = lastItem;
+                //   nextItem = firstItem.parent().parent().next().find('img');
+                //   console.log('Next: ' + nextItem.attr('src'));
+                // } else {
+                if (nextItem.attr('src') === undefined) {
+                  prevItem = lastItem;
+                  nextItem = firstItem;
+
+                  prevPosition = galleryItemCount;
+                  nextPosition = 1;
+                }
+
+                currentItem = nextItem;
+                $('.modal-body').html('<img src="' + currentItem.attr('src') + '" class="modal-img" alt="" /><div style="color: #333; padding-left: 10px;">' + nextPosition + '/' + galleryItemCount + '. kép: ' + currentItem.attr('alt') + '</div>');
+                prevItem = nextItem.parent().parent().prev().find('img');
+                nextItem = nextItem.parent().parent().next().find('img');
+
+                console.log('nextNext: ' + nextItem.attr('src'));
+                console.log('nextPrev: ' + prevItem.attr('src'));
+
+                // set prev position
+                prevPosition = prevItem.attr('id');
+                if (prevPosition === 'first-img') {
+                  prevPosition = 1;
+                } else if (prevPosition === 'last-img') {
+                  prevPosition = galleryItemCount;
+                } else {
+                  prevPosition++;
+                }
+
+                // set next position
+                nextPosition = nextItem.attr('id');
+
+                if (nextPosition === 'first-img') {
+                  nextPosition = 1;
+                } else if (nextPosition === 'last-img') {
+                  nextPosition = galleryItemCount;
+                } else {
+                  nextPosition++;
+                }
+
+              });
+            }
+            nextButton();
+
+
+            function prevButton() {
+              $('#prev').on('click', function () {
+                // if we are at the first image in the gallery, the next item will be the very last item
+                if (prevItem.attr('src') === undefined) {
+                  prevItem = lastItem;
+                  nextItem = firstItem;
+
+                  prevPosition = galleryItemCount;
+                  nextPosition = 1;
+                }
+
+                currentItem = prevItem;
+                $('.modal-body').html('<img src="' + currentItem.attr('src') + '" class="modal-img" alt="" /><span style="color: #333; padding-left: 10px;">' + prevPosition + '/' + galleryItemCount + '. kép: ' + currentItem.attr('alt') + '</span>');
+                prevItem = prevItem.parent().parent().prev().find('img');
+                nextItem = nextItem.parent().parent().prev().find('img');
+                console.log('iiiNext: ' + nextItem.attr('src'));
+                console.log('iiiPrev: ' + prevItem.attr('src'));
+
+                // set prev position
+                prevPosition = prevItem.attr('id');
+                if (prevPosition === 'first-img') {
+                  prevPosition = 1;
+                } else if (prevPosition === 'last-img') {
+                  prevPosition = galleryItemCount;
+                } else {
+                  prevPosition++;
+                }
+
+                // set next position
+                nextPosition = nextItem.attr('id');
+
+                if (nextPosition === 'first-img') {
+                  nextPosition = 1;
+                } else if (nextPosition === 'last-img') {
+                  nextPosition = galleryItemCount;
+                } else {
+                  nextPosition++;
+                }
+
+              });
+            }
+            prevButton();
+
+
+          });
+
+          // close modal button control
+          $('#close-lighbox').on('click', function () {
+            $('#lightbox-modal').modal('hide');
+
+          });
+        }
+
+      });
+    </script>
+</body>
+
+</html>
